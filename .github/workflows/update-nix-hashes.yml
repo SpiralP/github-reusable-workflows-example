@@ -15,6 +15,6 @@ jobs:
   update_nix_hashes:
     # !!! disabled
     if: ${{ false }}
-    uses: SpiralP/github-reusable-workflows/.github/workflows/update-nix-hashes.yml@ab2fcabfb8939e3b9beab2f8e4937b63664f7709 # v2.0.0
+    uses: SpiralP/github-reusable-workflows/.github/workflows/update-nix-hashes.yml@ab2fcabfb8939e3b9beab2f8e4937b63664f7709 # main
     with:
       npm-attribute: node
