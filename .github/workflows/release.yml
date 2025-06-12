@@ -14,6 +14,6 @@ permissions:
 
 jobs:
   release:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@89676213c6d6c21560934473b38469e7fc45be3c # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@dab00fe85fcf134cbb509a688e02269c67e85d25 # main
     with:
       args: --extends ./.github/semantic-release.json
