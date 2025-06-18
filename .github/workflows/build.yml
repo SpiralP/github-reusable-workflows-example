@@ -20,7 +20,7 @@ jobs:
     uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@52bffb42f5a10c2548f8a564f022fc0132d73b18 # main
 
   mac:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - run: |
           true
