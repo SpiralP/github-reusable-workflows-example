@@ -6,5 +6,8 @@
         "verifyConditionsCmd": "echo hehe"
       }
     ]
-  ]
+  ],
+  "__comment1": "If version is a space ' ', we are generating a regex to find+replace, so don't include build metadata.",
+  "__comment2": "https://github.com/semantic-release/semantic-release/blob/v24.2.5/lib/branches/get-tags.js#L14",
+  "tagFormat": "v${version === ' ' ? version : version + '+metadata.test.1.2.3'}"
 }
