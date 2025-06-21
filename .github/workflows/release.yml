@@ -17,3 +17,11 @@ jobs:
     uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@c486e35ce06f991c4565d2d8064948aa5b520047 # main
     with:
       extends: ./.github/semantic-release.json
+      replace-files: |
+        Cargo.lock
+        Cargo.toml
+        package-lock.json
+        package.json
+    secrets:
+      app-id: ${{ secrets.APP_ID }}
+      app-private-key: ${{ secrets.APP_PRIVATE_KEY }}
