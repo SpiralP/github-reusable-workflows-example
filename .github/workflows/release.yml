@@ -15,6 +15,7 @@ permissions:
 jobs:
   get-version-metadata:
     runs-on: ubuntu-24.04
+    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     steps:
@@ -30,6 +31,7 @@ jobs:
 
   release:
     needs: get-version-metadata
+    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
     permissions: {} # none, since we use a custom app
     uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@ed4dff1e230fe2f67ca490f066ae25f8739b6317 # main
     with:
