@@ -19,10 +19,12 @@ jobs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-tags: true
       - id: get-version-metadata
         run: |
           version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
-          echo "version-metadata=$version_metadata" >> "$GITHUB_OUTPUT"
+          echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
 
   release:
     needs: get-version-metadata
