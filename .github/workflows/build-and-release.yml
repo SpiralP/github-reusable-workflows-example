@@ -15,7 +15,7 @@ jobs:
   build:
     uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@9901d2ab457eb0e65ede9c486d90e17d37b70bd4 # main
     concurrency:
-      group: build-and-release-build-${{ github.ref }}
+      group: build-${{ github.ref }}
       cancel-in-progress: true
 
   get-version-metadata:
@@ -27,7 +27,7 @@ jobs:
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     concurrency:
-      group: build-and-release-get-version-metadata-${{ github.ref }}
+      group: get-version-metadata-${{ github.ref }}
       cancel-in-progress: false # do not cancel in-progress jobs
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -47,7 +47,7 @@ jobs:
     if: "${{ needs.get-version-metadata.outputs.version-metadata }}"
     permissions: {} # none, since we use a custom app
     concurrency:
-      group: build-and-release-release-${{ github.ref }}
+      group: release-${{ github.ref }}
       cancel-in-progress: false # do not cancel in-progress jobs
     with:
       environment-name: release
