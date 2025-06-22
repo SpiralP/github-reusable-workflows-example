@@ -31,7 +31,7 @@ jobs:
   release:
     needs: get-version-metadata
     permissions: {} # none, since we use a custom app
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@355f43206c36e56e1608ad5f5766a82e54c673a5 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@cb2e4e89a87ce3c5d46955d2f5b2628f1c4745a7 # main
     with:
       environment-name: release
       extends: ./.github/semantic-release.json
