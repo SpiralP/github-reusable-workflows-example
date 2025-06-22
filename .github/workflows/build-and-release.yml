@@ -1,23 +1,35 @@
-name: Release
+name: Build and Release
 
 on:
-  push:
+  pull_request:
     branches: [master, main]
+  push:
+    branches: ["*"]
+    tags: ["*"]
   workflow_dispatch:
 
 concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: false # do not cancel in-progress jobs
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read # for checkout
 
 jobs:
+  build:
+    uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@cb2e4e89a87ce3c5d46955d2f5b2628f1c4745a7 # main
+
   get-version-metadata:
     runs-on: ubuntu-24.04
-    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    needs: build
+    if: "${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    permissions:
+      contents: read # for checkout
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
+    concurrency:
+      group: build-and-release-get-version-metadata-${{ github.ref }}
+      cancel-in-progress: false # do not cancel in-progress jobs
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -26,14 +38,18 @@ jobs:
       - id: get-version-metadata
         run: |
           version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
+          test -z "$version_metadata" && echo "version_metadata is empty" && exit 1
           version_metadata="$(( version_metadata + 1 ))"
           echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
 
   release:
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@9901d2ab457eb0e65ede9c486d90e17d37b70bd4 # main
     needs: get-version-metadata
-    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    if: "${{ needs.get-version-metadata.outputs.version-metadata }}"
     permissions: {} # none, since we use a custom app
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@5b84578bc0e4243185521be02dd8811fb8024615 # main
+    concurrency:
+      group: build-and-release-release-${{ github.ref }}
+      cancel-in-progress: false # do not cancel in-progress jobs
     with:
       environment-name: release
       extends: ./.github/semantic-release.json
