@@ -33,8 +33,9 @@ jobs:
     needs: get-version-metadata
     if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
     permissions: {} # none, since we use a custom app
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@ed4dff1e230fe2f67ca490f066ae25f8739b6317 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@5b84578bc0e4243185521be02dd8811fb8024615 # main
     with:
+      environment-name: release
       extends: ./.github/semantic-release.json
       replace-files: |
         Cargo.lock
