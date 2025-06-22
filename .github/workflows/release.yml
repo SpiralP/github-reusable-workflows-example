@@ -33,7 +33,6 @@ jobs:
     permissions: {} # none, since we use a custom app
     uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@ed4dff1e230fe2f67ca490f066ae25f8739b6317 # main
     with:
-      environment-name: release
       extends: ./.github/semantic-release.json
       replace-files: |
         Cargo.lock
