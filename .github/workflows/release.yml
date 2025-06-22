@@ -10,11 +10,25 @@ concurrency:
   cancel-in-progress: false # do not cancel in-progress jobs
 
 permissions:
-  contents: write # for checkout, and to be able to create a release
+  contents: read # for checkout
 
 jobs:
+  get-version-metadata:
+    runs-on: ubuntu-24.04
+    outputs:
+      version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: get-version-metadata
+        run: |
+          version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
+          echo "version-metadata=$version_metadata" >> "$GITHUB_OUTPUT"
+
   release:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@182e2c8df8e27f0eca3ba017990c8877ea227faa # main
+    needs: get-version-metadata
+    permissions:
+      contents: write # for checkout, and to be able to create a release
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@f60b5ab9549cceb8a3cf563877efa7cc3bc1ebf4 # main
     with:
       extends: ./.github/semantic-release.json
       replace-files: |
@@ -22,6 +36,7 @@ jobs:
         Cargo.toml
         package-lock.json
         package.json
+      version-metadata: ${{ needs.get-version-metadata.outputs.version-metadata }}
     secrets:
       app-id: ${{ secrets.APP_ID }}
       app-private-key: ${{ secrets.APP_PRIVATE_KEY }}
