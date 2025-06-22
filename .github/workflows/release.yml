@@ -18,7 +18,7 @@ jobs:
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - id: get-version-metadata
         run: |
           version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
