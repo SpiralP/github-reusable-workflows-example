@@ -31,9 +31,10 @@ jobs:
   release:
     needs: get-version-metadata
     permissions: {} # none, since we use a custom app
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@13e28593c8c1ac16fe42b4d369d2dc3a6b450e33 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@39707c2a6ab6dababaa181e110491796a14e853e # main
     with:
-      environment: release
+      environment_name: release
+      environment_url: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
       extends: ./.github/semantic-release.json
       replace-files: |
         Cargo.lock
