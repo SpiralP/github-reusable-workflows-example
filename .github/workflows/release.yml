@@ -18,7 +18,7 @@ jobs:
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - id: get-version-metadata
         run: |
           version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
@@ -28,7 +28,7 @@ jobs:
     needs: get-version-metadata
     permissions:
       contents: write # for checkout, and to be able to create a release
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@f60b5ab9549cceb8a3cf563877efa7cc3bc1ebf4 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@98495b98803b24f383b166d3839d40b0ea3d4769 # main
     with:
       extends: ./.github/semantic-release.json
       replace-files: |
