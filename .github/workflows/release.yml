@@ -25,6 +25,7 @@ jobs:
       - id: get-version-metadata
         run: |
           version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
+          version_metadata="$(( version_metadata + 1 ))"
           echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
 
   release:
