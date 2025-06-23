@@ -1,5 +1,12 @@
+name: build
+
 on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches-ignore: [main, master]
   workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read # for checkout

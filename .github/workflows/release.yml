@@ -1,5 +1,12 @@
+name: release
+
 on:
   workflow_call:
+    secrets:
+      APP_ID:
+        required: true
+      APP_PRIVATE_KEY:
+        required: true
 
 permissions: {}
 
@@ -26,7 +33,7 @@ jobs:
   release:
     uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@408cb90aab3ba9328f52c6242dc2e5e51514342b # main
     needs: get-version-metadata
-    if: "${{ needs.get-version-metadata.outputs.version-metadata }}"
+    if: ${{ needs.get-version-metadata.outputs.version-metadata }}
     permissions: {} # none, since we use a custom app
     with:
       environment-name: release
