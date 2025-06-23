@@ -1,0 +1,12 @@
+on:
+  workflow_call:
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  linux-nix:
+    uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@408cb90aab3ba9328f52c6242dc2e5e51514342b # main
+
+  many-machines:
+    uses: ./.github/workflows/many-machines.yml
