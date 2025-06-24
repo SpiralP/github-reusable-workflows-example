@@ -11,9 +11,6 @@ permissions:
 jobs:
   build:
     uses: ./.github/workflows/build.yml
-    concurrency:
-      group: build-${{ github.ref }}
-      cancel-in-progress: true
 
   release:
     uses: ./.github/workflows/release.yml
@@ -22,6 +19,3 @@ jobs:
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
-    concurrency:
-      group: release-${{ github.ref }}
-      cancel-in-progress: false # do not cancel in-progress jobs
