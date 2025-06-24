@@ -15,7 +15,7 @@ jobs:
   release:
     uses: ./.github/workflows/release.yml
     needs: build
-    if: "${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
