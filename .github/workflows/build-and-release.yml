@@ -12,10 +12,39 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
 
-  release:
-    uses: ./.github/workflows/release.yml
+  get-version-metadata:
+    runs-on: ubuntu-24.04
     needs: build
-    if: "${{ ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    if: "${{ success() && always() && ! startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    outputs:
+      version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          submodules: recursive
+      - id: get-version-metadata
+        run: |
+          version_metadata="$(git tag --list 'v*.*.*' |wc -l)"
+          test -z "$version_metadata" && echo "version_metadata is empty" && exit 1
+          version_metadata="$(( version_metadata + 1 ))"
+          echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
+
+  release:
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@518bac85e62c59bfceb946e0b5b6bbc0d23e6f80 # main
+    needs: get-version-metadata
+    if: ${{ success() && always() && needs.get-version-metadata.outputs.version-metadata }}
+    permissions: {} # none, since we use a custom app
+    with:
+      environment-name: release
+      extends: ./.github/semantic-release.json
+      replace-files: |
+        Cargo.lock
+        Cargo.toml
+        package-lock.json
+        package.json
+      version-metadata: ${{ needs.get-version-metadata.outputs.version-metadata }}
     secrets:
-      APP_ID: ${{ secrets.APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+      app-id: ${{ secrets.APP_ID }}
+      app-private-key: ${{ secrets.APP_PRIVATE_KEY }}
