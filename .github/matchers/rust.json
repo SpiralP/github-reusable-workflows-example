@@ -1,0 +1,55 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "rust-compiler",
+      "pattern": [
+        {
+          "regexp": "^warning: (.+)$",
+          "message": 1
+        },
+        {
+          "regexp": "^  --> (\\S+):(\\d+):(\\d+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "optional": true
+        }
+      ]
+    },
+    {
+      "owner": "rust-panic",
+      "pattern": [
+        {
+          "regexp": "^.*(panicked at (\\S+):(\\d+):(\\d+)):?$",
+          "message": 1,
+          "file": 2,
+          "line": 3,
+          "column": 4
+        }
+      ]
+    },
+    {
+      "owner": "rust-compiler-panic",
+      "pattern": [
+        {
+          "regexp": "error: internal compiler error: (\\S):(\\d+):(\\d+): (.+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      ]
+    },
+    {
+      "owner": "cargo-fmt",
+      "pattern": [
+        {
+          "regexp": "^(Diff in (\\S+)) at line (\\d+):",
+          "message": 1,
+          "file": 2,
+          "line": 3
+        }
+      ]
+    }
+  ]
+}
