@@ -32,7 +32,7 @@ jobs:
           echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
 
   release:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@518bac85e62c59bfceb946e0b5b6bbc0d23e6f80 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@ac12136b90ac13e956d2071681c6046f69391714 # main
     needs: get-version-metadata
     if: ${{ success() && always() && needs.get-version-metadata.outputs.version-metadata }}
     permissions: {} # none, since we use a custom app
