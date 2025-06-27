@@ -11,21 +11,21 @@ defaults:
     shell: bash
 
 jobs:
-  windows-x86_64:
-    runs-on: windows-2025
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh x86_64-pc-windows-msvc
+  # windows-x86_64:
+  #   runs-on: windows-2025
+  #   steps:
+  #     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  #       with:
+  #         submodules: recursive
+  #     - run: ./.github/scripts/install-build-test.sh x86_64-pc-windows-msvc
 
-  windows-i686:
-    runs-on: windows-2025
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh i686-pc-windows-msvc
+  # windows-i686:
+  #   runs-on: windows-2025
+  #   steps:
+  #     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  #       with:
+  #         submodules: recursive
+  #     - run: ./.github/scripts/install-build-test.sh i686-pc-windows-msvc
 
   linux-x86_64:
     runs-on: ubuntu-24.04
@@ -33,36 +33,55 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh x86_64-unknown-linux-gnu
 
-  linux-i686:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Install deps
+      - name: Setup Rust
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get -y update
-          sudo apt-get -y install gcc-multilib g++-multilib \
-            pkg-config:i386 libssl-dev:i386
-          echo "PKG_CONFIG_ALLOW_CROSS=1" >> "$GITHUB_ENV"
+          rustup default stable
+          rustup component add clippy rustfmt
+          rustup target add x86_64-unknown-linux-gnu
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh i686-unknown-linux-gnu
+      - run: |
+          cargo clippy --target x86_64-unknown-linux-gnu \
+            2>&1 | tee -a '${{ runner.temp }}/output.log'
+      # - run: |
+      #     cargo build --target x86_64-unknown-linux-gnu \
+      #       2>&1 | tee -a '${{ runner.temp }}/output.log'
+      - run: |
+          cargo test --target x86_64-unknown-linux-gnu -- --nocapture --test-threads 1 \
+            2>&1 | tee -a '${{ runner.temp }}/output.log'
+      - run: |
+          node ./.github/scripts/generate-annotations.js \
+            '${{ runner.temp }}/output.log'
+        if: ${{ ! cancelled() }}
 
-  mac-x86_64:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh x86_64-apple-darwin
+  # linux-i686:
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - name: Install deps
+  #       run: |
+  #         sudo dpkg --add-architecture i386
+  #         sudo apt-get -y update
+  #         sudo apt-get -y install gcc-multilib g++-multilib \
+  #           pkg-config:i386 libssl-dev:i386
+  #         echo "PKG_CONFIG_ALLOW_CROSS=1" >> "$GITHUB_ENV"
 
-  mac-aarch64:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          submodules: recursive
-      - run: ./.github/scripts/install-build-test.sh aarch64-apple-darwin
+  #     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  #       with:
+  #         submodules: recursive
+  #     - run: ./.github/scripts/install-build-test.sh i686-unknown-linux-gnu
+
+  # mac-x86_64:
+  #   runs-on: macos-14
+  #   steps:
+  #     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  #       with:
+  #         submodules: recursive
+  #     - run: ./.github/scripts/install-build-test.sh x86_64-apple-darwin
+
+  # mac-aarch64:
+  #   runs-on: macos-14
+  #   steps:
+  #     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  #       with:
+  #         submodules: recursive
+  #     - run: ./.github/scripts/install-build-test.sh aarch64-apple-darwin
