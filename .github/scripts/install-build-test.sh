@@ -7,7 +7,7 @@ rustup default stable
 rustup component add rustfmt
 rustup target add "$CARGO_BUILD_TARGET"
 
-cargo check --target "$CARGO_BUILD_TARGET"
+cargo clippy --target "$CARGO_BUILD_TARGET"
 
 cargo build --target "$CARGO_BUILD_TARGET"
 

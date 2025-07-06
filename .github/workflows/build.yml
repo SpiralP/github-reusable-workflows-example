@@ -16,8 +16,8 @@ permissions:
   contents: read # for checkout
 
 jobs:
-  linux-nix:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@1967e53ec3edabc5d81d6ec2e585c05318fe2567 # main
+  # linux-nix:
+  #   uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@1967e53ec3edabc5d81d6ec2e585c05318fe2567 # main
 
   many-machines:
     uses: ./.github/workflows/many-machines.yml
