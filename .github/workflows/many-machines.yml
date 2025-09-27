@@ -52,7 +52,7 @@ jobs:
       - run: ./.github/scripts/install-build-test.sh i686-unknown-linux-gnu
 
   mac-x86_64:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
@@ -60,7 +60,7 @@ jobs:
       - run: ./.github/scripts/install-build-test.sh x86_64-apple-darwin
 
   mac-aarch64:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
