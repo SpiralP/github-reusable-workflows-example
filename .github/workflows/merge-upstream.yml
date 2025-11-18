@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   merge_upstream:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/merge-upstream.yml@6a83e785db9881c610aef92219b96263f251aa1e # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/merge-upstream.yml@d17a0d34b716f8bb55388900b93bf792d846227a # main
     with:
       url: https://github.com/SpiralP/github-reusable-workflows.git
