@@ -14,7 +14,7 @@ jobs:
   windows-x86_64:
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh x86_64-pc-windows-msvc
@@ -22,7 +22,7 @@ jobs:
   windows-i686:
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh i686-pc-windows-msvc
@@ -30,7 +30,7 @@ jobs:
   linux-x86_64:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh x86_64-unknown-linux-gnu
@@ -46,7 +46,7 @@ jobs:
             pkg-config:i386 libssl-dev:i386
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> "$GITHUB_ENV"
 
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh i686-unknown-linux-gnu
@@ -54,7 +54,7 @@ jobs:
   mac-x86_64:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh x86_64-apple-darwin
@@ -62,7 +62,7 @@ jobs:
   mac-aarch64:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
       - run: ./.github/scripts/install-build-test.sh aarch64-apple-darwin
