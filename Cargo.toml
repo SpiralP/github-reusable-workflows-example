@@ -1,6 +1,6 @@
 [package]
 name = "github-reusable-workflows-example-rust"
-version = "1.3.35+41"
+version = "1.3.36+42"
 edition = "2021"
 publish = false
 
