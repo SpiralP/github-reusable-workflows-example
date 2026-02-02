@@ -1,6 +1,6 @@
 {
   "name": "github-reusable-workflows-example-node",
-  "version": "1.3.37+43",
+  "version": "1.3.38+44",
   "private": true,
   "source": "src/index.html",
   "browserslist": "defaults",
