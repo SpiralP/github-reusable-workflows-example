@@ -260,7 +260,7 @@ dependencies = [
 
 [[package]]
 name = "github-reusable-workflows-example-rust"
-version = "1.3.52+58"
+version = "1.3.53+59"
 dependencies = [
  "reqwest",
  "tokio",
