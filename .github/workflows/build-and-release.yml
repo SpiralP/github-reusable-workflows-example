@@ -20,7 +20,7 @@ jobs:
     outputs:
       version-metadata: ${{ steps.get-version-metadata.outputs.version-metadata }}
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -33,7 +33,7 @@ jobs:
           echo "version-metadata=$version_metadata" | tee -a "$GITHUB_OUTPUT"
 
   release:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@83ad7d952b3333b88eb07b91247d57639411e028 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/release.yml@2d4d6b3a7adfb72d73b749efcec0f96a1a528bad # main
     needs: get-version-metadata
     if: ${{ success() && always() &&
       needs.get-version-metadata.outputs.version-metadata }}
