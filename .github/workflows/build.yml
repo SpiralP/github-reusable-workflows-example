@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   linux-nix:
-    uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@f4ff2fb6acd0e0c4b83aacfc8f20ddd3d4db8313 # main
+    uses: SpiralP/github-reusable-workflows/.github/workflows/build.yml@6eed3ce5f6f6abdb994239525c7cd84eb49498d3 # main
 
   many-machines:
     uses: ./.github/workflows/many-machines.yml
