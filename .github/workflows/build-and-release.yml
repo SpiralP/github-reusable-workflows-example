@@ -13,7 +13,7 @@ jobs:
     uses: ./.github/workflows/build.yml
 
   get-version-metadata:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: build
     if: "${{ success() && always() && ! startsWith(github.event.head_commit.message,
       'chore(release): ') }}"
